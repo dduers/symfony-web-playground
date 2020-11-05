@@ -10,7 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Text</th>
+                <th>Teaser</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ post.id }}</td>
                 <td>{{ post.title }}</td>
-                <td>{{ post.text | nl2br }}</td>
+                <td>{{ post.teaser | nl2br }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('post_show', {'id': post.id}) }}">show</a>
                     <a class="btn btn-success" href="{{ path('post_edit', {'id': post.id}) }}">edit</a>

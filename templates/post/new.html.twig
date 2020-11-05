@@ -7,5 +7,7 @@
 
     {{ include('post/_form.html.twig', {button_label: 'Create' }) }}
 
-    <a class="btn btn-primary" href="{{ path('post_index') }}">List of Posts</a>
+    <div class="mt-3">  
+        <a class="btn btn-primary d-inline" href="{{ path('post_index') }}">List of Posts</a>
+    </div>
 {% endblock %}
