@@ -13,10 +13,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/{_locale}/profile/{id}", name="app_profile")
+     * @Route("/profile", name="app_profile")
      */
-    public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        $user = $this->getUser();
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
@@ -29,6 +30,8 @@ class ProfileController extends AbstractController
             $this->addFlash('success', 'Profile updated successfully');
             return $this->redirectToRoute('home');
         }
+
+        dump($user->getPassword());
 
         return $this->render('profile/edit.html.twig', [
             'user' => $user,

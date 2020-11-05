@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+//use App\Entity\User;
 use App\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +13,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegisterController extends AbstractController
 {
     /**
-     * @Route("/{_locale}/register", name="app_register")
+     * @Route("/register", name="app_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_profile');
+        }
         $form = $this->createForm(RegisterType::class);
         $form->handleRequest($request);
 
