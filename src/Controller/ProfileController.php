@@ -25,6 +25,8 @@ class ProfileController extends AbstractController
                 $passwordEncoder->encodePassword($user, $user->getPassword())
             );
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Profile updated successfully');
             return $this->redirectToRoute('home');
         }
 
