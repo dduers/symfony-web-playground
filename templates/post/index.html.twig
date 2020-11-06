@@ -8,16 +8,16 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Created</th>
                 <th>Title</th>
                 <th>Teaser</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for post in posts %}
             <tr>
-                <td>{{ post.id }}</td>
+                <td>{{ post.getCreated() | date("Y-m-d H:i") }} by {{ post.getOwner }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.teaser | nl2br }}</td>
                 <td>
