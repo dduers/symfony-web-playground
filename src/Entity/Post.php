@@ -19,6 +19,11 @@ class Post
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     */
+    private $user;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -32,11 +37,6 @@ class Post
      * @ORM\Column(type="string", length=2048)
      */
     private $teaser;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $owner;
 
     /**
      * @ORM\Column(type="datetime")
@@ -108,18 +108,6 @@ class Post
         return $this;
     }
 
-    public function getOwner(): ?int
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(int $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
     public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
@@ -140,6 +128,30 @@ class Post
     public function setModified(\DateTimeInterface $modified): self
     {
         $this->modified = $modified;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?int
+    {
+        return $this->id_user;
+    }
+
+    public function setIdUser(int $id_user): self
+    {
+        $this->id_user = $id_user;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -37,7 +37,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->setOwner($this->getUser()->getId());
+            $post->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();
@@ -58,7 +58,6 @@ class PostController extends AbstractController
     {
         return $this->render('post/show.html.twig', [
             'post' => $post,
-            'user' => $userRepository->find($post->getOwner()),
         ]);
     }
 
