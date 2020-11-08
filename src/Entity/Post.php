@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +21,7 @@ class Post
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
      */
     private $user;
 
@@ -48,6 +50,11 @@ class Post
      */
     private $modified;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=PostCategory::class, mappedBy="posts")
+     */
+    private $postCategories;
+
 
     public function __construct() {
 
@@ -56,6 +63,7 @@ class Post
         if ($this->getModified() == null) {
             $this->setModified(new \DateTime());
         }
+        $this->postCategories = new ArrayCollection();
     }
 
     /**
@@ -152,6 +160,33 @@ class Post
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PostCategory[]
+     */
+    public function getPostCategories(): Collection
+    {
+        return $this->postCategories;
+    }
+
+    public function addPostCategory(PostCategory $postCategory): self
+    {
+        if (!$this->postCategories->contains($postCategory)) {
+            $this->postCategories[] = $postCategory;
+            $postCategory->addPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostCategory(PostCategory $postCategory): self
+    {
+        if ($this->postCategories->removeElement($postCategory)) {
+            $postCategory->removePost($this);
+        }
 
         return $this;
     }
