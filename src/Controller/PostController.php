@@ -36,15 +36,17 @@ class PostController extends AbstractController
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setUser($this->getUser());
+            //dump(user);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();
 
             return $this->redirectToRoute('post_index');
         }
+
 
         return $this->render('post/new.html.twig', [
             'post' => $post,
@@ -67,10 +69,16 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, Post $post): Response
     {
+        //$postCategories = new \App\Entity\PostCategory();
+        //$request->setParameter('postCategories', $postCategories);
+        //$post->addPostCategory([1,2]);
         $form = $this->createForm(PostType::class, $post);
+        //$request->setParameter('newParam', 'newParamValue');
+        //dump($request/*$_POST['post']*/);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('post_index');

@@ -17,7 +17,7 @@
         <tbody>
         {% for post in posts %}
             <tr>
-                <td>{{ post.getCreated() | date("Y-m-d H:i") }} by {{ post.getUser() ? post.getUser().getEmail() : 'n/a' }}</td>
+                <td>{{ post.getUser() ? ('<a href="mailto:' ~ post.getUser().getEmail() ~ '">' ~ post.getUser().getForename() ~ ' ' ~ post.getUser().getLastname() ~ '</a>') | raw : 'n/a' }} @ {{ post.getCreated() | date("Y-m-d H:i") }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.teaser | nl2br }}</td>
                 <td>

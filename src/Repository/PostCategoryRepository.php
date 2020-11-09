@@ -47,4 +47,16 @@ class PostCategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return PostCategory[]
+     */
+    public function findAllAlphabetical()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }

@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-header">
             <h5>{{ post.title }}</h5>
-            <p>{{ post.getUser() ? post.getUser().getEmail() : 'n/a' }} | {{ post.getCreated() | date("Y-m-d H:i") }}</p>
+            <p>{{ post.getUser() ? ('<a href="mailto:' ~ post.getUser().getEmail() ~ '">' ~ post.getUser().getForename() ~ ' ' ~ post.getUser().getLastname() ~ '</a>') | raw : 'n/a' }} @ {{ post.getCreated() | date("Y-m-d H:i") }}</p>
         </div>
         <div class="card-body">
             <!--<h5 class="card-title">Special title treatment</h5>-->
