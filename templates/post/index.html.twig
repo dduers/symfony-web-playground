@@ -5,6 +5,13 @@
 {% block body %}
     <h1>Post index</h1>
 
+    {% for postcategory in postcategories %}
+    
+        <a class="btn {{ chosencategory == postcategory.getId() ? 'btn-primary disabled' : 'btn-secondary' }}" href="{{ path('post_index') }}?category={{ postcategory.getId() }}">{{ postcategory.getName() }}</a>
+    {% endfor %}
+
+    <br/><br/>
+
     <table class="table table-striped">
         <thead>
             <tr>

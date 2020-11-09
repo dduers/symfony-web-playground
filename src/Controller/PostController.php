@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\PostCategory;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Repository\PostCategoryRepository;
@@ -21,10 +22,14 @@ class PostController extends AbstractController
     /**
      * @Route("/", name="post_index", methods={"GET"})
      */
-    public function index(PostRepository $postRepository): Response
+    public function index(Request $request, PostRepository $postRepository, PostCategoryRepository $postCategoryRepository): Response
     {
+
+        dump($postRepository->findAll());
         return $this->render('post/index.html.twig', [
             'posts' => $postRepository->findAll(),
+            'postcategories' => $postCategoryRepository->findAllAlphabetical(),
+            'chosencategory' => $request->query->get('category'),
         ]);
     }
 
@@ -36,12 +41,16 @@ class PostController extends AbstractController
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //$postCategory = new PostCategory();
+            //$post->addPostCategory($postCategory);
             $post->setUser($this->getUser());
             //dump(user);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
+            //$entityManager->persist($postCategory);
             $entityManager->flush();
 
             return $this->redirectToRoute('post_index');
