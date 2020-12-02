@@ -78,7 +78,9 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, Post $post): Response
     {
-        //$postCategories = new \App\Entity\PostCategory();
+        $postCategories = new PostCategory();
+        $postCategories->addPost($post);
+        $post->addPostCategory($postCategories);
         //$request->setParameter('postCategories', $postCategories);
         //$post->addPostCategory([1,2]);
         $form = $this->createForm(PostType::class, $post);
