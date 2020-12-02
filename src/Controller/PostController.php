@@ -85,7 +85,7 @@ class PostController extends AbstractController
         //$post->addPostCategory([1,2]);
         $form = $this->createForm(PostType::class, $post);
         //$request->setParameter('newParam', 'newParamValue');
-        //dump($request/*$_POST['post']*/);
+        dump($request/*$_POST['post']*/);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
